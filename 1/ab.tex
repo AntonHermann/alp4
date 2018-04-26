@@ -61,7 +61,7 @@ Anton Oehler
     \forall j \in \N \: \exists k,n \in N, k > j: (a_k = 2n)
   \]
   F\"ur jedes $a_j$ gibt es ein Element $a_k$ nach $a_j$, das sich als
-  $a_k = 2n$ darstellen lässt. Da $n$ ein beliebiges Element aus $\N$ ist,
+  $a_k = 2n$ darstellen l\"asst. Da $n$ ein beliebiges Element aus $\N$ ist,
   folgt daraus, dass $a_k$ eine gerade Zahl ist.
 \item \emph{Negieren Sie den folgenden pr\"adikatenlogischen
   Ausdruck:}
@@ -77,10 +77,34 @@ Anton Oehler
   $n \in \N$.}
 
   \begin{enumerate}
-    \item Indutionsbehauptung
+    \item Indutionsbehauptung\\
+    Sei $M$ eine beliebige Menge, so gilt:
     \[
-      \mathcal{P}
+      \forall M, |M| = n \in N: |\mathcal{P}(M)| = 2^n
     \]
+    \item Induktionsanfang mit $n = 0$\\
+    \begin{flalign*}
+      M &= \{\}\\
+      \Rightarrow \mathcal{P}(M) &= \{\emptyset\}\\
+      \Rightarrow |\mathcal{P}(M)| &= 1 = 2^0
+    \end{flalign*}
+    \item Induktionsschritt\\
+    F\"ur jede endliche Menge mit $n$ Elementen gilt $|\mathcal{P}(M)| = 2^n|$\\
+    Nun sei $|M| = n+1|$, $M = \{a_0 \dots a_{n+1}\}$.\\
+    Sei $U \subseteq M$. Es gibt 2 M\"oglichkeiten:
+    \begin{enumerate}
+      \item $a_{n+1} \notin U$:\\
+      $U$ ist Teilmemge von $M' = M \ \{a_{n+1}\}$ und nach Induktionsvoraussetzung
+      gibt es $2^n$ Teilmengen von $M'$
+      \item $a_{n+1} \in U$:\\
+      $U = U' \cup \{a_{n+1}\}$, $U'$ ist Teilmenge von $M'$.\\
+      Nach Voraussetzung gibt es $2^n$ M\"oglichkeiten f\"ur $U'$ und damit gibt
+      es $2^n$ Teilmengen von M, die $a_{n+1}$ enthalten:
+      \[
+        \Rightarrow |\mathcal{P}(M)| = |\mathcal{P}(M')| + |\mathcal{P}(M')| =
+        2 \cdot 2^n = 2^{n+1}
+      \]
+    \end{enumerate}
   \end{enumerate}
 \item \emph{Klaus besitzt 10 gelbe Dominosteine, Frank hat 20 rote
   Dominosteine, und G\"unter 15 blaue Dominosteine.
@@ -95,7 +119,7 @@ Anton Oehler
   Alle m\"oglichen Kombinationen der 45 Dominosteine ohne Einschr\"ankung: $45!$\\
   Anzahl der ''Dopplungen'' durch Ver\"anderung der Reihenfolge innerhalb einer Farbe
   ist $n_{Farbe}!$, wobei $n_{Farbe}$ die Anzahl der Steine einer Farbe ist.\\
-  $\Rightarrow$ Die Steine können auf $\frac{45!}{10! \cdot 20! \cdot 15!}
+  $\Rightarrow$ Die Steine knnen auf $\frac{45!}{10! \cdot 20! \cdot 15!}
   \approx 1,04 \cdot 10^{19}$ verschiedene Arten angeordnet werden.
 \end{enumerate}
 
@@ -127,6 +151,31 @@ in den Griff bekommen k\"onnen.
 Diskutieren Sie die Verfahren bez\"uglich Korrektheit, Effizienz
 und Annahmen \"uber die erlaubten Operationen.
 Was ist der Zusammenhang zu nichtsequentieller Programmierung?
+
+\begin{itemize}
+  \item Wenn man den K\"uhlschrank \"uberpr\"uft und zum Bioladen geht, legt
+    man einen Zettel in den K\"uhlschrank, der signalisiert, dass
+    man einkaufen ist. \"uberpr\"uft dann die 2. Person den K\"uhlschrank,
+    sieht sie dass momentan jemand einkaufen ist und geht selbst nicht
+    los.
+
+    \textbf{Korrektheit}: Vorausgesetzt, dass das Einkaufen immer zu Ende ausgeführt wird,
+    terminiert dieser Ablauf immer korrekt.\\
+    \textbf{Effizienz}: Gut: Es geht niemand unn\"otig los und muss niemals l\"anger auf die Milch
+    warten, als er selbst zum Einkaufen brauchen würde.
+  \item Rollenverteilung: Nur einer von beiden ist zust\"andig f\"ur das Auff\"ullen
+  der Milch.
+
+    \textbf{Korrektheit}: Vorausgesetzt, der Zust\"andige holt verl\"asslich immer die Milch,
+    wenn sie alle ist, dann ist auch dieser Ablauf korrekt.\\
+    \textbf{Effizienz}: Ineffizient, da, selbst wenn Person B zuerst entdeckt, dass keine
+    Milch da ist, aber nicht zust\"andig ist, muss sie warten, bis die zust\"andige Person da ist
+    und Milch holt.
+\end{itemize}
+
+Das Milchholen entspricht dem kritischen Abschnitt. Es sollten niemals 2 Personen gleichzeitig
+Milch kaufen gehen sollten, sonst kann es zu Problemen wie dem vom 10. April kommen.\\
+Die Milch ist damit eine geteilte Resource, der Zettel entspricht einem Lock/Flag.
 
 \AUFGABE{Java}{10 Punkte}
 
