@@ -196,9 +196,9 @@ Anton Oehler, Mark Niehues
 
 \AUFGABE{Parallele Suche}{}
 
-Es lässt sich zeigen, dass Programm \textit{a} und \textit{b} aus den selben Gründen nicht korrekt sind, während Programm \textit{c} korrekt ist. Die Ursache für das Fehlerhafte verhalten der ersten beiden Programme bildet der Umstand, dass die \texttt{found} Variable auch mit \texttt{false} überschrieben wird, falls ein Thread keine Nullstelle gefunden hat. Dadurch kann das Finden der Nullstelle bei ungünstigem Schedulen untergehen. Mit diesem Fall ist auf Grund der angenommenen schwachen Fairness zu rechnen. Ein Szenario wäre besipielsweise:
+Es lässt sich zeigen, dass Programm \textit{a} und \textit{b} aus den selben Gründen nicht korrekt sind, während Programm \textit{c} korrekt ist. Die Ursache für das Fehlerhafte verhalten der ersten beiden Programme bildet der Umstand, dass die \texttt{found} Variable auch mit \texttt{false} überschrieben wird, falls ein Thread keine Nullstelle gefunden hat. Dadurch kann das Finden der Nullstelle bei ungünstigem Schedulen untergehen. Mit diesem Fall ist auf Grund der angenommenen schwachen Fairness zu rechnen. Ein Szenario zu Programm \textit{a} wäre besipielsweise (das Szenario zu \textit{b} ist analog):
 \lstinputlisting[
-	caption={Beispielhaftes Szenario, dass die Korrektheit von a widerlegt.}								% Style
+	caption={Beispielhaftes Szenario, dass die Korrektheit von a widerlegt.},								% Style
 	firstnumber={1},										% Start der Nummerierung
 	firstline={0}											% 1. Codezeile
 ]											% letzte Codezeile
