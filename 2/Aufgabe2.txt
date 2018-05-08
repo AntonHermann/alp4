@@ -1,0 +1,10 @@
+Sei n Nullstelle, sodass f(n) = 0
+Zustand: (i, j, found)
+
+...		(n-1, n-1, false)
+a4 ->	(n, n-1, false)
+a5 ->	(n, n-1, true)
+b4 -> 	(n, n-1, false)	# Kritischer Übergang, der zum fehlerhaften Verhalten führt
+a2 -> 	(n, n-1, false)
+a3 ->	(n+1, n-1, false)	# Nullstelle übersprungen
+...
