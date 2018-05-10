@@ -56,33 +56,34 @@ Anton Oehler, Jona Rex
 		\centering
 		\begin{tikzpicture}[->,>=stealth',auto,node distance=2.8cm,semithick]
 			\tikzset{every state/.append style={rectangle, rounded corners}}
-			\node[state, initial] at (0,0) () {\r{a1},\g{b1},\r a};
-			% 1: U
-			% 2: while dran != a do
-			% 3:	NOP
-			% 4: K
-			% 5: dran <- b
-
-			% \foreach \y/\b in {0/b1,3/b2,6/b3} {
-				% \foreach \x/\a in {0/a1,2/a2,4/a4,6/a5} {
+			\node[state, initial, initial where=above] at (0,0) () {\r{a1},\g{b1},\r a};
 
 			%! dran = a
 			\foreach \b [count=\y from 0] in {b1,b2,b3} {
-				\foreach \a [count=\x from 0] in {a1,a2,a3,a4,a5} {
+				\node[state] at (\y*3,0) (a1_\b_a) {\r{a1},\g\b,\r a};
+				\node[state] at (\y*3,-2) (af_\b_a) {\r{$\bot$},\g\b,\r a};
+				\foreach \a [count=\x from 2] in {a2,a3,a4,a5} {
 					\node[state] at (\y*3,-\x*2) (\a_\b_a) {\r\a,\g\b,\r a};
 				}
 			}
+			%! b failed
+			\foreach \a/\ad [count=\x from 0] in {a1/a1,af/{$\bot$},a2/a2,a3/a3,a4/a4,a5/a5} {
+				\node[state] at (-3,-\x*2) (\a_bf_a) {\r\ad,\g{$\bot$},\r a};
+			}
 			%! progress a
-			\foreach \y in {b1,b2,b3} {
-				\foreach \fromx/\tox in {a1/a2,a4/a5} {
+			\foreach \y in {bf,b1,b2,b3} {
+				% normal edges
+				\foreach \fromx/\tox in {a1/af,a3/a4,a4/a5} {
 					\draw (\fromx_\y_a) edge[red] (\tox_\y_a);
 				}
-				\draw (a2_\y_a) edge[red, bend left=45] (a4_\y_a);
-				\draw (a3_\y_a) edge[red] (a4_\y_a);
+				% bended edges
+				\foreach \fromx/\tox in {a1/a2,a2/a4} {
+					\draw (\fromx_\y_a) edge[red, bend left=45] (\tox_\y_a);
+				}
 			}
 			%! progress b
-			\foreach \x in {a1,a2,a3,a4,a5} {
-				\foreach \fromy/\toy in {b1/b2,b2/b3} {
+			\foreach \x in {a1,af,a2,a3,a4,a5} {
+				\foreach \fromy/\toy in {b1/bf,b1/b2,b2/b3} {
 					\draw (\x_\fromy_a) edge[blue] (\x_\toy_a);
 				}
 				\draw (\x_b3_a) edge[blue,bend left=10] (\x_b2_a);
@@ -90,26 +91,33 @@ Anton Oehler, Jona Rex
 
 			%! dran = b
 			\foreach \b [count=\y from 0] in {b1,b2,b3,b4,b5} {
-				\foreach \a [count=\x from 5] in {a1,a2,a3} {
+				\node[state] at (\y*3,-6*2) (a1_\b_b) {\r{a1},\g\b,\g b};
+				\node[state] at (\y*3,-7*2) (af_\b_b) {\r{$\bot$},\g\b,\g b};
+				\foreach \a [count=\x from 8] in {a2,a3} {
 					\node[state] at (\y*3,-\x*2) (\a_\b_b) {\r\a,\g\b,\g b};
 				}
 			}
+			%! b failed
+			\foreach \a/\ad [count=\x from 6] in {a1/a1,af/{$\bot$},a2/a2,a3/a3} {
+				\node[state] at (-3,-\x*2) (\a_bf_b) {\r\ad,\g{$\bot$},\g b};
+			}
 
 			%! a5 => a1, dran <- b
-			\foreach \y in {b1,b2,b3} {
+			\foreach \y in {bf,b1,b2,b3} {
 				\draw (a5_\y_a) edge[red] (a1_\y_b);
 			}
 
 			%! progress a
-			\foreach \y in {b1,b2,b3,b4,b5} {
-				\foreach \fromx/\tox in {a1/a2,a2/a3} {
+			\foreach \y in {bf,b1,b2,b3,b4,b5} {
+				\foreach \fromx/\tox in {a1/af,a2/a3} {
 					\draw (\fromx_\y_b) edge[red] (\tox_\y_b);
 				}
 				\draw (a3_\y_b) edge[red,bend left=15] (a2_\y_b);
+				\draw (a1_\y_b) edge[red,bend left=45] (a2_\y_b);
 			}
 			%! progress b
-			\foreach \x in {a1,a2,a3} {
-				\foreach \fromy/\toy in {b1/b2,b4/b5} {
+			\foreach \x in {a1,af,a2,a3} {
+				\foreach \fromy/\toy in {b1/b2,b1/bf,b4/b5} {
 					\draw (\x_\fromy_b) edge[blue] (\x_\toy_b);
 				}
 				\draw (\x_b2_b) edge[blue,bend left] (\x_b4_b);
@@ -118,10 +126,52 @@ Anton Oehler, Jona Rex
 			%! progress b, to a?_b1_a
 			\foreach \a in {a1,a2,a3}
 				\draw (\a_b5_b) edge[blue] node {\r\a,\g{b1},\r{a}} ++(3,0);
-			% \draw (a2_b5_b) edge[blue] node {\r{a2},\g{b1},\r{a}} ++(3,0);
+			\draw (af_b5_b) edge[blue] node {\r{$\bot$},\g{b1},\r{a}} ++(3,0);
 		\end{tikzpicture}
 		\caption{Teilaufgabe a)}
 	\end{figure}
 
+
+\AUFGABE{Der Algorithmus von Peterson}{10 Punkte}
+	\begin{tabular}{l|l}
+		a1: U & b1: U\\
+		a2: adrin $\leftarrow$ true & b2: bdrin $\leftarrow$ true\\
+		a3: letzter $\leftarrow$ a & b3: letzter $\leftarrow$ b\\
+		a4: while bdrin \&\& letzter = a do &
+			b4: while adrin \&\& letzter = b do\\
+		a5: \quad NOP & b5: \quad NOP\\
+		a6: K & b6: K\\
+		a7: adrin $\leftarrow$ false & b7: bdrin $\leftarrow$ false
+	\end{tabular}
+	\hrule
+
+	Der Algorithmus von Peterson l"ost das Problem des wechselseitigen
+	Ausschlusses, indem beide Prozesse zuerst ihr \emph{Interesse am Ausf"uhren
+	des kritischen Abschnittes} bekunden, indem sie $adrin$ bzw $bdrin$ auf
+	$true$ setzen. Haben beide Prozesse gleichzeitig ihr Interesse bekundet,
+	darf der Prozess seinen kritischen Abschnitt betreten, welcher zuletzt
+	$letzter$ auf $a/b$ gesetzt hat, der andere muss warten bis dieser Prozess
+	mit $adrin/bdrin \leftarrow false$ sein Interesse wieder zur"uckzieht und
+	seinen unkritischen Abschnitt ausf"uhrt.
+
+	St"urzt einer der Prozesse in $U$ ab, so ist seine $drin$ Variable auf $false$
+	gesetzt und der andere Prozess kann ungehindert seinen kritischen Abschnitt
+	betreten. Somit ist \emph{Freedom from starvation} auch gel"ost.
+
+	Die Ähnlichkeit zum Algorithmus von Decker wird besonders deutlich, wenn man
+	eine etwas andere Variante des Algorithmus von Peterson betrachtet, in der
+	die Variable $letzter$ wieder durch $dran$ ersetzt wird und $a$ und $b$ bei der
+	Zuweisung vertauscht werden ($a3: letzter \leftarrow b$ und
+	$a4: \dots letzter = b$). Durch die Umbenennung/ das vertauschen von $a$ und $b$
+	ändert sich die allgemeine Funktionsweise natürlich nicht, es wird jedoch von
+	der Bedeutung her bei gleichzeitigem Interesse dem anderen Prozess der Vortritt
+	gelassen, wenn nur einer der Prozesse Interesse bekundet kann dieser ungehindert
+	$K$ ausführen. Besonders wurde die verschachtelte while-Schleife in der if-Abfrage
+	in der while-schleife zu einer einzigen while-Schleife mit 2 Bedingungen gemacht,
+	wodurch der Algorithmus kürzer ist.
+
+	Das Grundprinzip der beiden Algorigmen ist aber das gleiche: es wird vor
+	Betreten des kritischen Abschnittes \emph{Interesse bekundet} und bei gleichzeitigem
+	Interesse einem Prozess der Vortritt gegeben.
 \end{description}
 \end{document}
