@@ -8,6 +8,7 @@
 \usepackage{fullpage}
 \usepackage{pgf}
 \usepackage{tikz}
+\usepackage{multirow, tabularx}
 \usetikzlibrary{arrows, automata}
 
 \newcommand{\ABGABEDATUM}{am 11. Mai 2018 bis 10 Uhr}
@@ -50,6 +51,7 @@ Anton Oehler, Jona Rex
 	% AUFGABE 1
 	\AUFGABE{Zustandsdiagramme}{10 Punkte}
 	% 1 a
+	\subsubsection*{a)}
 	\renewcommand{\r}[1]{\textcolor{red}{#1}}
 	\newcommand{\g}[1]{\textcolor{blue}{#1}}
 	\begin{figure}[htbp]
@@ -60,94 +62,149 @@ Anton Oehler, Jona Rex
 
 			%! dran = a
 			\foreach \b [count=\y from 0] in {b1,b2,b3} {
-				\node[state] at (\y*3,0) (a1_\b_a) {\r{a1},\g\b,\r a};
-				\node[state] at (\y*3,-2) (af_\b_a) {\r{$\bot$},\g\b,\r a};
-				\foreach \a [count=\x from 2] in {a2,a3,a4,a5} {
-					\node[state] at (\y*3,-\x*2) (\a_\b_a) {\r\a,\g\b,\r a};
+					\node[state] at (\y*3,0) (a1_\b_a) {\r{a1},\g\b,\r a};
+					\node[state] at (\y*3,-2) (af_\b_a) {\r{$\bot$},\g\b,\r a};
+					\foreach \a [count=\x from 2] in {a2,a3,a4,a5} {
+							\node[state] at (\y*3,-\x*2) (\a_\b_a) {\r\a,\g\b,\r a};
+						}
 				}
-			}
 			%! b failed
 			\foreach \a/\ad [count=\x from 0] in {a1/a1,af/{$\bot$},a2/a2,a3/a3,a4/a4,a5/a5} {
-				\node[state] at (-3,-\x*2) (\a_bf_a) {\r\ad,\g{$\bot$},\r a};
+			\node[state] at (-3,-\x*2) (\a_bf_a) {\r\ad,\g{$\bot$},\r a};
 			}
 			%! progress a
 			\foreach \y in {bf,b1,b2,b3} {
-				% normal edges
-				\foreach \fromx/\tox in {a1/af,a3/a4,a4/a5} {
-					\draw (\fromx_\y_a) edge[red] (\tox_\y_a);
+					% normal edges
+					\foreach \fromx/\tox in {a1/af,a3/a4,a4/a5} {
+							\draw (\fromx_\y_a) edge[red] (\tox_\y_a);
+						}
+					% bended edges
+					\foreach \fromx/\tox in {a1/a2,a2/a4} {
+							\draw (\fromx_\y_a) edge[red, bend left=45] (\tox_\y_a);
+						}
 				}
-				% bended edges
-				\foreach \fromx/\tox in {a1/a2,a2/a4} {
-					\draw (\fromx_\y_a) edge[red, bend left=45] (\tox_\y_a);
-				}
-			}
 			%! progress b
 			\foreach \x in {a1,af,a2,a3,a4,a5} {
-				\foreach \fromy/\toy in {b1/bf,b1/b2,b2/b3} {
-					\draw (\x_\fromy_a) edge[blue] (\x_\toy_a);
+					\foreach \fromy/\toy in {b1/bf,b1/b2,b2/b3} {
+							\draw (\x_\fromy_a) edge[blue] (\x_\toy_a);
+						}
+					\draw (\x_b3_a) edge[blue,bend left=10] (\x_b2_a);
 				}
-				\draw (\x_b3_a) edge[blue,bend left=10] (\x_b2_a);
-			}
 
 			%! dran = b
 			\foreach \b [count=\y from 0] in {b1,b2,b3,b4,b5} {
-				\node[state] at (\y*3,-6*2) (a1_\b_b) {\r{a1},\g\b,\g b};
-				\node[state] at (\y*3,-7*2) (af_\b_b) {\r{$\bot$},\g\b,\g b};
-				\foreach \a [count=\x from 8] in {a2,a3} {
-					\node[state] at (\y*3,-\x*2) (\a_\b_b) {\r\a,\g\b,\g b};
+					\node[state] at (\y*3,-6*2) (a1_\b_b) {\r{a1},\g\b,\g b};
+					\node[state] at (\y*3,-7*2) (af_\b_b) {\r{$\bot$},\g\b,\g b};
+					\foreach \a [count=\x from 8] in {a2,a3} {
+							\node[state] at (\y*3,-\x*2) (\a_\b_b) {\r\a,\g\b,\g b};
+						}
 				}
-			}
 			%! b failed
 			\foreach \a/\ad [count=\x from 6] in {a1/a1,af/{$\bot$},a2/a2,a3/a3} {
-				\node[state] at (-3,-\x*2) (\a_bf_b) {\r\ad,\g{$\bot$},\g b};
+			\node[state] at (-3,-\x*2) (\a_bf_b) {\r\ad,\g{$\bot$},\g b};
 			}
 
 			%! a5 => a1, dran <- b
 			\foreach \y in {bf,b1,b2,b3} {
-				\draw (a5_\y_a) edge[red] (a1_\y_b);
-			}
+					\draw (a5_\y_a) edge[red] (a1_\y_b);
+				}
 
 			%! progress a
 			\foreach \y in {bf,b1,b2,b3,b4,b5} {
-				\foreach \fromx/\tox in {a1/af,a2/a3} {
-					\draw (\fromx_\y_b) edge[red] (\tox_\y_b);
+					\foreach \fromx/\tox in {a1/af,a2/a3} {
+							\draw (\fromx_\y_b) edge[red] (\tox_\y_b);
+						}
+					\draw (a3_\y_b) edge[red,bend left=15] (a2_\y_b);
+					\draw (a1_\y_b) edge[red,bend left=45] (a2_\y_b);
 				}
-				\draw (a3_\y_b) edge[red,bend left=15] (a2_\y_b);
-				\draw (a1_\y_b) edge[red,bend left=45] (a2_\y_b);
-			}
 			%! progress b
 			\foreach \x in {a1,af,a2,a3} {
-				\foreach \fromy/\toy in {b1/b2,b1/bf,b4/b5} {
-					\draw (\x_\fromy_b) edge[blue] (\x_\toy_b);
+					\foreach \fromy/\toy in {b1/b2,b1/bf,b4/b5} {
+							\draw (\x_\fromy_b) edge[blue] (\x_\toy_b);
+						}
+					\draw (\x_b2_b) edge[blue,bend left] (\x_b4_b);
+					\draw (\x_b3_b) edge[blue] (\x_b4_b);
 				}
-				\draw (\x_b2_b) edge[blue,bend left] (\x_b4_b);
-				\draw (\x_b3_b) edge[blue] (\x_b4_b);
-			}
 			%! progress b, to a?_b1_a
 			\foreach \a in {a1,a2,a3}
-				\draw (\a_b5_b) edge[blue] node {\r\a,\g{b1},\r{a}} ++(3,0);
+			\draw (\a_b5_b) edge[blue] node {\r\a,\g{b1},\r{a}} ++(3,0);
 			\draw (af_b5_b) edge[blue] node {\r{$\bot$},\g{b1},\r{a}} ++(3,0);
 		\end{tikzpicture}
 		\caption{Teilaufgabe a)}
 	\end{figure}
+	\subsubsection*{b)}
+	Der Zustand $(a_2, b_2, b)$ gew"ahrt durch den Zustand der geteilten Variable dem Prozess \texttt{b} den Zugang zum kritischen Abschnitt, w"ahrend Prozess \texttt{a} in einer Warteschleife zwischen diesem und dem Zustand $(a_3, b_2, b)$ \textit{feststeckt}. Da Prozess \texttt{b} aufgrund schwacher Fairness irgendwann ausgef"uhrt wird, verhindert diese Priorisierung Deadlocks.
+
+	\AUFGABE{Der Algorithmus von Peterson}{}
+	\begin{enumerate}
+		\item Der Algorithmus f"uhrt eine zus"atzliche globale Variable \texttt{letzter} ein, die festh"alt, welcher Prozess zuletzt den Eintritt in den kritischen Abschnitt gefordert hat. Der Prozess, der zuletzt gefordert hat, wartet nun, bis der andere Prozess seinen kritischen Abschnitt verlassen hat, signalisiert durch die globalen Variablen \texttt{adrin} und \texttt{bdrin}. Dadurch ist eindeutig geregelt, welcher der beiden Prozesse seinen kritischen Abschnitt betreten darf, falls beide fordern.
+
+		      Der Algorithmus hat mit dem Dekkers Algorithmus gemein, dass beide Prozesse eine Variable besitzen, die anzeigt, dass die ihren kritischen Abschnitt ausf"uhren m"ochten. Im Gegensatz zu Dekkers Algorithmus, nimmt der Prozess, der nicht im kritischen Abschnitt ist, nicht seine Forderung zur"uck um einen Deadlock zu verhindern. Stattdessen wird die Reihenfolge vor dem betreten der Schleifen festgelegt, als die Reihenfolge mit der das Betreten gefordert wurde.
+	\end{enumerate}
+
+	\AUFGABE{CMPXCHG}{}
+	\begin{table}[h]
+		\centering
+		\begin{tabularx}{0.75\textwidth}{l | l}
+			\multicolumn{2}{c}{\texttt{common <- 0}}                                                 \\
+			\hline
+			\texttt{a}                                 & \texttt{b}                                  \\
+			\hline
+			\texttt{U}                                 & \texttt{U}                                  \\
+			\texttt{until common != 1 do}              & \texttt{until common != 2 do}               \\
+			\texttt{\hspace{2em}CMPXCHG(common, 0, 1)} & \texttt{\hspace{2em} CMPXCHG(common, 0, 2)} \\
+			\texttt{K}                                 & \texttt{K}                                  \\
+			\texttt{common <- 0}                       & \texttt{common <- 0}                        \\
+		\end{tabularx}
+		\caption{Thread-Safer Algorithmus mit CMPXCHG als atomare Anweisung}
+	\end{table}
+
+	\begin{table}[h]
+		\centering
+		\begin{tabularx}{0.75\textwidth}{l | l}
+			\multicolumn{2}{c}{\texttt{common <- 0}}                                                 \\
+			\hline
+			\texttt{a}                                 & \texttt{b}                                  \\
+			\hline
+			\texttt{until common != 1 do}              & \texttt{until common != 2 do}               \\
+			\texttt{\hspace{2em}CMPXCHG(common, 0, 1)} & \texttt{\hspace{2em} CMPXCHG(common, 0, 2)} \\
+			\texttt{common <- 0}                       & \texttt{common <- 0}                        \\
+		\end{tabularx}
+		\caption{Abgek"urzter Thread-Safer Algorithmus mit CMPXCHG als atomare Anweisung}
+	\end{table}
+
+	\begin{figure}[htbp]
+		\centering
+		\includegraphics[width=0.8\textwidth]{zustand.jpg}
+		\caption{Zustandsdiagramm des vereinfachten Algorithmus}
+		\label{zsd}
+	\end{figure}
+
+	Aus dem in Abbildung 1 dargestellten Zustandsdiagramm k"onnen wir die Korrektheit des Algorithmus nachvollziehen. Der Einfachheit halber ist in dem Diagramm nur der Fall dargestellt, in dem Prozess \texttt{a} den kritischen Bereich betritt. Der andere Fall ist symmetrisch.
+
+	Zun"achst einmal l"asst sich feststellen, dass nie der Zustand $(a_3, b_3, 1)$, $(a_3, b_3, 0)$ oder $(a_3, b_3, 2)$ angenommen wird. \textit{Mutual exclution} ist somit erf"ullt.
+
+	Da die Variable \texttt{common} im kritischen Abschnitt zur"uck auf $0$ gesetzt wird und damit fr"uher oder sp"ater (auf Grund schwacher Fairness) der Anfangszustand erreicht wird, wird irgendwann jeder Prozess die M"oglichkeit haben, in seinen kritischen Abschnitt zu gelangen. Damit ist die \textit{Freedom from Starvation} sichergestellt.
+
+	Zu guter Letzt muss noch gezeigt werden, dass es keine Deadlocks gibt. Dies ist gew"ahrleistet durch die \texttt{CMPXCHG} Funktion, welche in diesem Kontext nur das "Uberschreiben der geteilten Variable durch den Prozess, von dem sie zuerst aufgerufen wird, zul"asst.
 
 
-\AUFGABE{Der Algorithmus von Peterson}{10 Punkte}
+	\AUFGABE{Der Algorithmus von Peterson}{10 Punkte}
 	\begin{tabular}{l|l}
-		a1: U & b1: U\\
-		a2: adrin $\leftarrow$ true & b2: bdrin $\leftarrow$ true\\
-		a3: letzter $\leftarrow$ a & b3: letzter $\leftarrow$ b\\
+		a1: U                               & b1: U                        \\
+		a2: adrin $\leftarrow$ true         & b2: bdrin $\leftarrow$ true  \\
+		a3: letzter $\leftarrow$ a          & b3: letzter $\leftarrow$ b   \\
 		a4: while bdrin \&\& letzter = a do &
-			b4: while adrin \&\& letzter = b do\\
-		a5: \quad NOP & b5: \quad NOP\\
-		a6: K & b6: K\\
-		a7: adrin $\leftarrow$ false & b7: bdrin $\leftarrow$ false
+		b4: while adrin \&\& letzter = b do                                \\
+		a5: \quad NOP                       & b5: \quad NOP                \\
+		a6: K                               & b6: K                        \\
+		a7: adrin $\leftarrow$ false        & b7: bdrin $\leftarrow$ false
 	\end{tabular}
 	\hrule
 
 	Der Algorithmus von Peterson l"ost das Problem des wechselseitigen
 	Ausschlusses, indem beide Prozesse zuerst ihr \emph{Interesse am Ausf"uhren
-	des kritischen Abschnittes} bekunden, indem sie $adrin$ bzw $bdrin$ auf
+		des kritischen Abschnittes} bekunden, indem sie $adrin$ bzw $bdrin$ auf
 	$true$ setzen. Haben beide Prozesse gleichzeitig ihr Interesse bekundet,
 	darf der Prozess seinen kritischen Abschnitt betreten, welcher zuletzt
 	$letzter$ auf $a/b$ gesetzt hat, der andere muss warten bis dieser Prozess
@@ -158,17 +215,17 @@ Anton Oehler, Jona Rex
 	gesetzt und der andere Prozess kann ungehindert seinen kritischen Abschnitt
 	betreten. Somit ist \emph{Freedom from starvation} auch gel"ost.
 
-	Die Ähnlichkeit zum Algorithmus von Decker wird besonders deutlich, wenn man
+	Die "Ahnlichkeit zum Algorithmus von Decker wird besonders deutlich, wenn man
 	eine etwas andere Variante des Algorithmus von Peterson betrachtet, in der
 	die Variable $letzter$ wieder durch $dran$ ersetzt wird und $a$ und $b$ bei der
 	Zuweisung vertauscht werden ($a3: letzter \leftarrow b$ und
 	$a4: \dots letzter = b$). Durch die Umbenennung/ das vertauschen von $a$ und $b$
-	ändert sich die allgemeine Funktionsweise natürlich nicht, es wird jedoch von
+	"andert sich die allgemeine Funktionsweise nat"urlich nicht, es wird jedoch von
 	der Bedeutung her bei gleichzeitigem Interesse dem anderen Prozess der Vortritt
 	gelassen, wenn nur einer der Prozesse Interesse bekundet kann dieser ungehindert
-	$K$ ausführen. Besonders wurde die verschachtelte while-Schleife in der if-Abfrage
+	$K$ ausf"uhren. Besonders wurde die verschachtelte while-Schleife in der if-Abfrage
 	in der while-schleife zu einer einzigen while-Schleife mit 2 Bedingungen gemacht,
-	wodurch der Algorithmus kürzer ist.
+	wodurch der Algorithmus k"urzer ist.
 
 	Das Grundprinzip der beiden Algorigmen ist aber das gleiche: es wird vor
 	Betreten des kritischen Abschnittes \emph{Interesse bekundet} und bei gleichzeitigem
