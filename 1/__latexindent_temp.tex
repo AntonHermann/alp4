@@ -1,0 +1,121 @@
+\documentclass[a4paper,twoside,12pt]{article}
+  %\usepackage [reqno] {amsmath}
+  \usepackage{amsfonts,amstext}
+  \usepackage{amsmath}
+  \usepackage{german}
+  \usepackage{graphicx}
+  \usepackage{fullpage}
+
+  \newcommand{\ZETTELNUMMER}{1}
+  \newcommand{\ABGABEDATUM}{am 27. April 2018 bis 10 Uhr in die
+  Tutorenf\"acher}
+
+  \newcounter{AUFGNR}
+  \setcounter{AUFGNR}{1}
+  \newcommand{\AUFGABE}[2]{\vspace{0.3cm}\item[Aufgabe~\arabic{AUFGNR}]\stepcounter{AUFGNR} #1\hfill\emph{#2}}
+
+
+  \newcommand{\floor}[1]{\left\lfloor{#1}\right\rfloor}
+  \newcommand{\ceil}[1]{\left\lceil{#1}\right\rceil}
+  \newcommand{\half}[1]{\frac{#1}{2}}
+  \newcommand{\N}{\mathbb{N}}
+
+
+
+  \renewcommand{\labelenumi}{(\alph{enumi})}
+  \renewcommand{\labelenumii}{(\roman{enumii})}
+
+
+  \begin{document}
+  \pagestyle{empty}
+  \hrule\medskip
+  \rule{0ex}{0ex}\\[-1ex]
+  \ZETTELNUMMER. Aufgabenblatt zur Vorlesung
+
+  \smallskip
+  \noindent
+  \large
+  \textbf{Nichtsequentielle und Verteilte Programmierung}\hfill SoSe
+  2018 \\[0.5ex]
+  \normalsize
+  Wolfgang Mulzer, Katinka Wolter
+
+  \medskip\hrule
+
+  \smallskip
+  \noindent
+  \textbf{Abgabe} \ABGABEDATUM
+
+  \vskip 0.5cm
+
+
+  \begin{description}
+  \AUFGABE{Logik und diskrete Mathematik}{10 Punkte}
+
+  \begin{enumerate}
+  \item Was ist der Unterschied zwischen einem Booleschen
+    Ausdruck und einer Booleschen Funktion?
+  \item Sei $(a_i)_{i \in \N}$ eine Folge von nat\"urlichen Zahlen.
+    Geben Sie eine pr\"adikatenlogische Formel an, die besagt,
+    dass $(a_i)$ unendlich viele gerade Zahlen enth\"alt.
+    Begr\"unden Sie Ihre Antwort.
+  \item Negieren Sie den folgenden pr\"adikatenlogischen
+    Ausdruck:
+      \[
+        \forall i \in \N: (i > 5) \Rightarrow (\exists j \in \N: j + i > 100).
+      \]
+  \item Beweisen Sie durch vollst\"andige Induktion, dass die Potenzmenge
+    einer $n$-elementigen Menge genau $2^n$ Elemente enth\"alt, f\"ur alle
+    $n \in \N$.
+  \item Klaus besitzt 10 gelbe Dominosteine, Frank hat 20 rote
+    Dominosteine, und G\"unter 15 blaue Dominosteine.
+    Die Dominosteine einer Farbe sind jeweils in einer festen Reihenfolge
+    nummeriert.
+    Auf wie viele verschiedene Arten k\"onnen Klaus, Frank und G\"unter
+    ihre Dominosteine hintereinander stellen, so dass die gelben, roten
+    und blauen Steine jeweils in der richtigen Reihenfolge bleiben, die
+    Farben sich aber beliebig abwechseln d\"urfen?
+    Begr\"unden Sie Ihre Antwort.
+  \end{enumerate}
+
+  \AUFGABE{Zu viel Milch}{10 Punkte}
+
+  Waltraud und Manfred wohnen zusammen.
+  Beide trinken gerne Bio-Milch, die schnell schlecht wird.
+  Daher sollte immer genau eine Bio-Milch im K\"uhlschrank sein.
+  Am 10. April 2018 tr\"agt sich folgendes zu:
+  \begin{verbatim}
+
+         Waltraud	                         Manfred
+  15:00  Ueberprueft Kuehlschrank:
+         keine Milch.
+  15:05  Geht zum Bioladen.
+  15:10  Kauft Milch.                      Ueberprueft Kuehlschrank:
+                                           keine Milch.
+  15:15  Verlaesst Bioladen.               Geht zum Bioladen.
+  15:20  Wieder zu Hause:                  Kauft Milch.
+         Stellt Milch in den Kuehlschrank.
+  15:25                                    Verlaesst Bioladen.
+  15:30                                    Wieder zu Hause:
+                                           Oh nein! Zu viel Milch!
+  \end{verbatim}
+
+  \"Uberlegen Sie sich zwei verschiedene Verfahren, wie Waltraud
+  und Manfred das Milchproblem mit m\"oglichst einfachen Mitteln
+  in den Griff bekommen k\"onnen.
+  Diskutieren Sie die Verfahren bez\"uglich Korrektheit, Effizienz
+  und Annahmen \"uber die erlaubten Operationen.
+  Was ist der Zusammenhang zu nichtsequentieller Programmierung?
+
+  \AUFGABE{Java}{10 Punkte}
+
+  Lesen Sie die Java-Dokumentation zu \texttt{Thread}
+  und \texttt{Runnable}.
+
+  Schreiben Sie ein Java-Programm, das als Kommandozeilenparameter eine
+  nat\"urliche Zahl $n$ erh\"alt und dann $n$ Threads startet.
+  Jeder dieser Threads soll f\"ur eine zuf\"allige Zeitspanne zwischen
+  $1$ und $5$ Sekunden laufen und dabei wiederholt seinen eindeutige
+  Kennung ausgeben.
+  \end{description}
+  \end{document}
