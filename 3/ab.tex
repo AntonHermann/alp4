@@ -133,13 +133,13 @@ Anton Oehler, Jona Rex
 		\caption{Teilaufgabe a)}
 	\end{figure}
 	\subsubsection*{b)}
-	Der Zustand $(a_2, b_2, b)$ gew"ahrt durch den Zustand der geteilten Variable dem Prozess \texttt{b} den Zugang zum kritischen Abschnitt, w"ahrend Prozess \texttt{a} in einer Warteschleife zwischen diesem und dem Zustand $(a_3, b_2, b)$ \textit{feststeckt}. Da Prozess \texttt{b} aufgrund schwacher Fairness irgendwann ausgef"uhrt wird, verhindert diese Priorisierung Deadlocks.
+	Der Zustand $(a_2, b_2, b)$ gewährt durch den Zustand der geteilten Variable dem Prozess \texttt{b} den Zugang zum kritischen Abschnitt, während Prozess \texttt{a} in einer Warteschleife zwischen diesem und dem Zustand $(a_3, b_2, b)$ \textit{feststeckt}. Da Prozess \texttt{b} aufgrund schwacher Fairness irgendwann ausgeführt wird, verhindert diese Priorisierung Deadlocks.
 
 	\AUFGABE{Der Algorithmus von Peterson}{}
 	\begin{enumerate}
-		\item Der Algorithmus f"uhrt eine zus"atzliche globale Variable \texttt{letzter} ein, die festh"alt, welcher Prozess zuletzt den Eintritt in den kritischen Abschnitt gefordert hat. Der Prozess, der zuletzt gefordert hat, wartet nun, bis der andere Prozess seinen kritischen Abschnitt verlassen hat, signalisiert durch die globalen Variablen \texttt{adrin} und \texttt{bdrin}. Dadurch ist eindeutig geregelt, welcher der beiden Prozesse seinen kritischen Abschnitt betreten darf, falls beide fordern.
+		\item Der Algorithmus führt eine zusätzliche globale Variable \texttt{letzter} ein, die festhält, welcher Prozess zuletzt den Eintritt in den kritischen Abschnitt gefordert hat. Der Prozess, der zuletzt gefordert hat, wartet nun, bis der andere Prozess seinen kritischen Abschnitt verlassen hat, signalisiert durch die globalen Variablen \texttt{adrin} und \texttt{bdrin}. Dadurch ist eindeutig geregelt, welcher der beiden Prozesse seinen kritischen Abschnitt betreten darf, falls beide fordern.
 
-		      Der Algorithmus hat mit dem Dekkers Algorithmus gemein, dass beide Prozesse eine Variable besitzen, die anzeigt, dass die ihren kritischen Abschnitt ausf"uhren m"ochten. Im Gegensatz zu Dekkers Algorithmus, nimmt der Prozess, der nicht im kritischen Abschnitt ist, nicht seine Forderung zur"uck um einen Deadlock zu verhindern. Stattdessen wird die Reihenfolge vor dem betreten der Schleifen festgelegt, als die Reihenfolge mit der das Betreten gefordert wurde.
+		      Der Algorithmus hat mit dem Dekkers Algorithmus gemein, dass beide Prozesse eine Variable besitzen, die anzeigt, dass die ihren kritischen Abschnitt ausführen möchten. Im Gegensatz zu Dekkers Algorithmus, nimmt der Prozess, der nicht im kritischen Abschnitt ist, nicht seine Forderung zurück um einen Deadlock zu verhindern. Stattdessen wird die Reihenfolge vor dem betreten der Schleifen festgelegt, als die Reihenfolge mit der das Betreten gefordert wurde.
 	\end{enumerate}
 
 	\AUFGABE{CMPXCHG}{}
@@ -170,7 +170,7 @@ Anton Oehler, Jona Rex
 			\texttt{\hspace{2em}CMPXCHG(common, 0, 1)} & \texttt{\hspace{2em} CMPXCHG(common, 0, 2)} \\
 			\texttt{common <- 0}                       & \texttt{common <- 0}                        \\
 		\end{tabularx}
-		\caption{Abgek"urzter Thread-Safer Algorithmus mit CMPXCHG als atomare Anweisung}
+		\caption{Abgekürzter Thread-Safer Algorithmus mit CMPXCHG als atomare Anweisung}
 	\end{table}
 
 	\begin{figure}[htbp]
@@ -180,13 +180,13 @@ Anton Oehler, Jona Rex
 		\label{zsd}
 	\end{figure}
 
-	Aus dem in Abbildung 1 dargestellten Zustandsdiagramm k"onnen wir die Korrektheit des Algorithmus nachvollziehen. Der Einfachheit halber ist in dem Diagramm nur der Fall dargestellt, in dem Prozess \texttt{a} den kritischen Bereich betritt. Der andere Fall ist symmetrisch.
+	Aus dem in Abbildung 1 dargestellten Zustandsdiagramm können wir die Korrektheit des Algorithmus nachvollziehen. Der Einfachheit halber ist in dem Diagramm nur der Fall dargestellt, in dem Prozess \texttt{a} den kritischen Bereich betritt. Der andere Fall ist symmetrisch.
 
-	Zun"achst einmal l"asst sich feststellen, dass nie der Zustand $(a_3, b_3, 1)$, $(a_3, b_3, 0)$ oder $(a_3, b_3, 2)$ angenommen wird. \textit{Mutual exclution} ist somit erf"ullt.
+	Zunächst einmal lässt sich feststellen, dass nie der Zustand $(a_3, b_3, 1)$, $(a_3, b_3, 0)$ oder $(a_3, b_3, 2)$ angenommen wird. \textit{Mutual exclution} ist somit erfüllt.
 
-	Da die Variable \texttt{common} im kritischen Abschnitt zur"uck auf $0$ gesetzt wird und damit fr"uher oder sp"ater (auf Grund schwacher Fairness) der Anfangszustand erreicht wird, wird irgendwann jeder Prozess die M"oglichkeit haben, in seinen kritischen Abschnitt zu gelangen. Damit ist die \textit{Freedom from Starvation} sichergestellt.
+	Da die Variable \texttt{common} im kritischen Abschnitt zurück auf $0$ gesetzt wird und damit früher oder später (auf Grund schwacher Fairness) der Anfangszustand erreicht wird, wird irgendwann jeder Prozess die Möglichkeit haben, in seinen kritischen Abschnitt zu gelangen. Damit ist die \textit{Freedom from Starvation} sichergestellt.
 
-	Zu guter Letzt muss noch gezeigt werden, dass es keine Deadlocks gibt. Dies ist gew"ahrleistet durch die \texttt{CMPXCHG} Funktion, welche in diesem Kontext nur das "Uberschreiben der geteilten Variable durch den Prozess, von dem sie zuerst aufgerufen wird, zul"asst.
+	Zu guter Letzt muss noch gezeigt werden, dass es keine Deadlocks gibt. Dies ist gewährleistet durch die \texttt{CMPXCHG} Funktion, welche in diesem Kontext nur das Überschreiben der geteilten Variable durch den Prozess, von dem sie zuerst aufgerufen wird, zulässt.
 
 
 	\AUFGABE{Der Algorithmus von Peterson}{10 Punkte}
