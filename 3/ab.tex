@@ -51,6 +51,7 @@ Anton Oehler, Jona Rex
 	% AUFGABE 1
 	\AUFGABE{Zustandsdiagramme}{10 Punkte}
 	% 1 a
+	\subsubsection*{a)}
 	\renewcommand{\r}[1]{\textcolor{red}{#1}}
 	\newcommand{\g}[1]{\textcolor{blue}{#1}}
 	\begin{figure}[htbp]
@@ -123,6 +124,8 @@ Anton Oehler, Jona Rex
 		\end{tikzpicture}
 		\caption{Teilaufgabe a)}
 	\end{figure}
+\subsubsection*{b)}
+Der Zustand $(a_2, b_2, b)$ gewährt durch den Zustand der geteilten Variable dem Prozess \texttt{b} den Zugang zum kritischen Abschnitt, während Prozess \texttt{a} in einer Warteschleife zwischen diesem und dem Zustand $(a_3, b_2, b)$ \textit{feststeckt}. Da Prozess \texttt{b} aufgrund schwacher Fairness irgendwann ausgeführt wird, verhindert diese Priorisierung Deadlocks. 
 
 \AUFGABE{Der Algorithmus von Peterson}{}
 \begin{enumerate}
