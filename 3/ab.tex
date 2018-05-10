@@ -123,5 +123,11 @@ Anton Oehler, Jona Rex
 		\caption{Teilaufgabe a)}
 	\end{figure}
 
+\AUFGABE{Der Algorithmus von Peterson}{}
+\begin{enumerate}
+\item Der Algorithmus führt eine zusätzliche globale Variable \texttt{letzter} ein, die festhält, welcher Prozess zuletzt den Eintritt in den kritischen Abschnitt gefordert hat. Der Prozess, der zuletzt gefordert hat, wartet nun, bis der andere Prozess seinen kritischen Abschnitt verlassen hat, signalisiert durch die globalen Variablen \texttt{adrin} und \texttt{bdrin}. Dadurch ist eindeutig geregelt, welcher der beiden Prozesse seinen kritischen Abschnitt betreten darf, falls beide fordern. 
+
+Der Algorithmus hat mit dem Dekkers Algorithmus gemein, dass beide Prozesse eine Variable besitzen, die anzeigt, dass die ihren kritischen Abschnitt ausführen möchten. Im Gegensatz zu Dekkers Algorithmus, nimmt der Prozess, der nicht im kritischen Abschnitt ist, nicht Forderung zurück um einen Deadlock zu verhindern. Stattdessen wird die Reihenfolge vor dem betreten der Schleifen festgelegt, als die Reihenfolge mit der das Betreten gefordert wurde.
+\end{enumerate}
 \end{description}
 \end{document}
