@@ -151,7 +151,7 @@ Anton Oehler, Jona Rex
 			\texttt{a}                                 & \texttt{b}                                  \\
 			\hline
 			\texttt{U}                                 & \texttt{U}                                  \\
-			\texttt{until common != 1 do}              & \texttt{until common != 2 do}               \\
+			\texttt{until common == 1 do}              & \texttt{until common == 2 do}               \\
 			\texttt{\hspace{2em}CMPXCHG(common, 0, 1)} & \texttt{\hspace{2em} CMPXCHG(common, 0, 2)} \\
 			\texttt{K}                                 & \texttt{K}                                  \\
 			\texttt{common <- 0}                       & \texttt{common <- 0}                        \\
@@ -166,7 +166,7 @@ Anton Oehler, Jona Rex
 			\hline
 			\texttt{a}                                 & \texttt{b}                                  \\
 			\hline
-			\texttt{until common != 1 do}              & \texttt{until common != 2 do}               \\
+			\texttt{until common == 1 do}              & \texttt{until common == 2 do}               \\
 			\texttt{\hspace{2em}CMPXCHG(common, 0, 1)} & \texttt{\hspace{2em} CMPXCHG(common, 0, 2)} \\
 			\texttt{common <- 0}                       & \texttt{common <- 0}                        \\
 		\end{tabularx}
