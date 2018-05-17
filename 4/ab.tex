@@ -7,8 +7,6 @@
 \usepackage{fullpage}
 
 \newcommand{\ZETTELNUMMER}{4}
-\newcommand{\ABGABEDATUM}{am 27. April 2018 bis 10 Uhr in die
-Tutorenf\"acher}
 
 \newcounter{AUFGNR}
 \setcounter{AUFGNR}{1}
@@ -40,6 +38,12 @@ Tutorenf\"acher}
 \normalsize
 Anton Oehler, Mark Niehues
 
+\newcommand{\immer}{\Box}
+\newcommand{\irgendwann}{\lozenge}
+\newcommand{\folgt}{\Rightarrow}
+\newcommand{\oder}{\vee}
+\newcommand{\und}{\wedge}
+
 \medskip\hrule
 
 \begin{description}
@@ -51,6 +55,23 @@ Anton Oehler, Mark Niehues
 
 % Aufgabe 1
 \AUFGABE{Der Algorthmus von Peterson II}{10 Punkte}
+\begin{verbatim}
+======================================================
+  global adrin = false, bdrin = false, letzter = a
+a1: U                     | b1: U
+a2: adrin  <- true        | b2: bdrin  <- true
+a3: letzter <- a          | b3: letzter <- b
+a4: while bdrin &&        | b4: while adrin &&
+          letzter = a do  |           letzter = b do
+a5:     NOP               | b5:     NOP
+a6: K                     | b6: K
+a7: adrin <- false        | b7: bdrin <- false
+\end{verbatim}
+F"ur alle m"oglichen Zustandsfolgen gilt:
+\begin{itemize}
+	\item $\immer(a_1 \folgt \irgendwann(a_2 \oder a_\bot)$
+\end{itemize}
+
 
 \end{description}
 \end{document}
