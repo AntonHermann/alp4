@@ -56,13 +56,13 @@ Anton Oehler, Mark Niehues
 
   \includegraphics[width=0.5\textwidth]{1_a.png}
 
-Anhand der Grafik lässt sich erkennen, dass die Aussage nicht für alle Belegungen gilt.
+Anhand der Grafik l"asst sich erkennen, dass die Aussage nicht f"ur alle Belegungen gilt.
 
   \item \begin{eqnarray}
 		     ((\Box\, p \Rightarrow \lozenge\, q) \land \lozenge \Box\, q )& \Rightarrow & \lozenge\, q
 		\end{eqnarray}
 
-Die Aussage gilt für alle Belegungen, da die schwächere Aussage $\lozenge \Box\, q \Rightarrow \lozenge\, q$ für alle Belegungen gilt: Wenn ab einem Zeitpunkt q immer \textit{true} ist, dann ist q auch irgendwann in der Zukunft \textit{true}.
+Die Aussage gilt f"ur alle Belegungen, da die schw"achere Aussage $\lozenge \Box\, q \Rightarrow \lozenge\, q$ f"ur alle Belegungen gilt: Wenn ab einem Zeitpunkt q immer \textit{true} ist, dann ist q auch irgendwann in der Zukunft \textit{true}.
 
 \item
 \begin{enumerate}
@@ -103,7 +103,7 @@ wobei $\dot{U}((a_i)_{i\in N}, (b_i)_{i\in N}) = (w_i)_{i\in N}$\\
 und $w_i = \begin{cases} t & falls\, \exists j\geq i: b_j = t \land \forall k\in [i, ..., j): a_k = t \\ f & sonst \end{cases}$
 \begin{figure}
   \includegraphics[width=0.5\textwidth]{2_a_1.png}
-\caption{Beispiel für den \textit{bis} Operator}
+\caption{Beispiel f"ur den \textit{bis} Operator}
 \end{figure}
 
 \item
@@ -115,13 +115,13 @@ und $w_i = \begin{cases}
  \end{cases}$
  	\begin{figure}
  	   \includegraphics[width=0.5\textwidth]{2_a_2.png}
-	\caption{Beispiel für den \textit{nächster} Operator}
+	\caption{Beispiel f"ur den \textit{n"achster} Operator}
  	\end{figure}
 
 \end{enumerate}
 
 \item
-Falls mehrere Threads im Spiel sind, ist der nächste Schritt unter Annahme schwacher Fairness nicht genau definiert.
+Falls mehrere Threads im Spiel sind, ist der n"achste Schritt unter Annahme schwacher Fairness nicht genau definiert.
 
 \item
 $ \lozenge\, a \equiv true\, Ua$, da letzteres true ist, wenn $\exists j\geq i: a_j = true \land true $\\
@@ -158,12 +158,11 @@ F"ur alle m"oglichen Zustandsfolgen gilt:
 \end{itemize}
 
 Au"serdem legen wir folgende Invarianten fest:
-\begin{itemize}
-	\item $\immer(letzter = a \oder letzter = b)$
-	\item $\immer(adrin \equiv a_3 \oder a_4 \oder a_5 \oder a_6 \oder a_7)$
-	\item $\immer(bdrin \equiv b_3 \oder b_4 \oder b_5 \oder b_6 \oder b_7)$
-	% \item $\immer(adrin \und bdrin \equiv
-\end{itemize}
+\begin{enumerate}
+	\item[1)] $\immer(letzter = a \oder letzter = b)$
+	\item[2)] $\immer(adrin \equiv a_3 \oder a_4 \oder a_5 \oder a_6 \oder a_7)$
+	\item[3)] $\immer(bdrin \equiv b_3 \oder b_4 \oder b_5 \oder b_6 \oder b_7)$
+\end{enumerate}
 
 \begin{enumerate}
 	\item Zu beweisen:
@@ -178,9 +177,16 @@ Au"serdem legen wir folgende Invarianten fest:
 			Nach Invariante 2) und $a_6$ ist $adrin = true$:
 			\[ (a_6 \und (b_4 \oder b_5)) \und (false \oder letzter = a) \]
 			\[ a_6 \und (b_4 \oder b_5) \und letzter = a \]
+			Aus $(b_4 \oder b_5)$ und Invariante 3) folgt $bdrin = true$\\
+			$b$ befindet sich in der Schleife, wartet also darauf dass $a$
+			$adrin$ auf $false$ setzt. Ist aber $letzter = a$ und $bdrin = true$,
+			so h"atte $a$ niemals von $a_4$ nach $a_6$ gehen d"urfen.
 
+			Folglich kann nicht gleichzeitig $a_6$, $(b_4 \oder b_5)$ und $letzter = a$ gelten:\\
+			\emph{Widerspruch!}
 
-		\item $((a_4 \oder a_5) \und b_6) \folgt (bdrin \und letzter = a)$
+		\item $((a_4 \oder a_5) \und b_6) \folgt (bdrin \und letzter = a)$\\
+			Beweis analog zu vorherigem, nur mit $a$ und $b$ vertauscht.
 	\end{itemize}
 	\item Zu zeigen:
 	\begin{itemize}
