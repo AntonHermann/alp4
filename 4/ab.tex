@@ -49,9 +49,84 @@ Anton Oehler, Mark Niehues
 \begin{description}
 % Aufgabe 1
 \AUFGABE{Lineare Temporale Logik I}{10 Punkte}
+\begin{enumerate}
+  \item { \[
+     \lozenge \Box\, p \Leftrightarrow \Box \lozenge\, p
+  \]}
+  
+  \includegraphics[width=0.5\textwidth]{1_a.png}
+  
+Anhand der Grafik lässt sich erkennen, dass die Aussage nicht für alle Belegungen gilt.
+
+  \item \begin{eqnarray}
+		     ((\Box\, p \Rightarrow \lozenge\, q) \land \lozenge \Box\, q )& \Rightarrow & \lozenge\, q \\
+		     ((\neg \Box\, p \lor \lozenge\, q) \land \lozenge \Box\, q )& \Rightarrow & \lozenge\, q
+		\end{eqnarray}
+
+\item 
+\begin{enumerate}
+\item zu Zeigen: $(\Box\, p \wedge \Box\, q) \Leftrightarrow \Box (p \wedge q)$
+
+$
+\Box\, p_i \wedge \Box\, q_i := \forall j \geq i : p_j \wedge \forall j \geq i:q_j => \forall j \geq i: p_j \wedge q_j
+$
+
+$
+\Box (p_i \wedge q_i) := \forall j \geq i: p_j \wedge q_j
+$ 
+
+q.e.d.
+
+\item zu Zeigen: $(\lozenge\, p \vee \lozenge\, q) \Leftrightarrow \lozenge (p \vee q)$
+
+$
+\lozenge\, p_i \vee \lozenge\, q_i := \exists j \geq i: p_j \vee \exists j \geq i: q_j => \exists j \geq i: p \vee q
+$
+
+$
+\lozenge (p \vee q) := \exists j \geq i: p \vee q
+$
+
+q.e.d.
+\end{enumerate}
+\end{enumerate}
 
 % Aufgabe 2
 \AUFGABE{Lineare Temporale Logik II}{10 Punkte}
+\begin{enumerate}
+\item
+\begin{enumerate}
+\item
+$I_x(\alpha U \beta) = I_x(\alpha )\dot{U} I_x(\beta)$ mit $\dot{U}: \{t,f\}^{N x N} \rightarrow \{t,f\}^N$ \\
+wobei $\dot{U}((a_i)_{i\in N}, (b_i)_{i\in N}) = (w_i)_{i\in N}$\\
+und $w_i = \begin{cases} t & falls\, \exists j\geq i: b_j = t \land \forall k\in [i, ..., j): a_k = t \\ f & sonst \end{cases}$
+\begin{figure}
+  \includegraphics[width=0.5\textwidth]{2_a_1.png}
+\caption{Beispiel für den \textit{bis} Operator}
+\end{figure}  
+
+\item
+$I_x(\bigcirc \alpha) = \dot{\bigcirc} I_x(\alpha )$ mit $\dot{\bigcirc}: \{t,f\}^N \rightarrow \{t,f\}^N$ \\
+wobei $\dot{\bigcirc}((a_i)_{i\in N}) = (w_i)_{i\in N}$\\
+und $w_i = \begin{cases}
+ t, & falls\, a_{i+1} = t\\
+ f, & sonst 
+ \end{cases}$  
+ 	\begin{figure}
+ 	   \includegraphics[width=0.5\textwidth]{2_a_2.png}
+	\caption{Beispiel für den \textit{nächster} Operator}
+ 	\end{figure}
+
+\end{enumerate}
+
+\item 
+Falls mehrere Threads im Spiel sind, ist der nächste Schritt unter Annahme schwacher Fairness nicht genau definiert.
+
+\item
+$ \Box\, a = aUa \land \neg (aU\neg a)$\\
+$ \lozenge\, a = aUa \lor \neg aUa$\\
+
+\end{enumerate}
 
 % Aufgabe 1
 \AUFGABE{Der Algorthmus von Peterson II}{10 Punkte}
