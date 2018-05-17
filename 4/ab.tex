@@ -69,9 +69,38 @@ a7: adrin <- false        | b7: bdrin <- false
 \end{verbatim}
 F"ur alle m"oglichen Zustandsfolgen gilt:
 \begin{itemize}
-	\item $\immer(a_1 \folgt \irgendwann(a_2 \oder a_\bot)$
+	\item $\immer(a_1 \folgt \irgendwann (a_2 \oder a_\bot))$
+	\item $\immer(a_2 \folgt \irgendwann a_3)$
+	\item $\immer(a_3 \folgt \irgendwann a_4)$
+	\item $\immer(a_4 \folgt \irgendwann (a_5 \oder a_6)$
+	\item $\immer(a_5 \folgt \irgendwann a_4)$
+	\item $\immer(a_6 \folgt \irgendwann a_7)$
+	\item $\immer(a_7 \folgt \irgendwann a_1)$
+	\item $\immer(a_\bot \folgt \immer a_\bot)$
+	\item Analog f"ur die Zust"ande von $b$
 \end{itemize}
 
+Au"serdem legen wir folgende Invarianten fest:
+\begin{itemize}
+	\item $\immer(letzter = a \oder letzter = b)$
+	\item $\immer(adrin \equiv a_3 \oder a_4 \oder a_5 \oder a_6 \oder a_7)$
+	\item $\immer(bdrin \equiv b_3 \oder b_4 \oder b_5 \oder b_6 \oder b_7)$
+	% \item $\immer(adrin \und bdrin \equiv
+\end{itemize}
+
+\begin{enumerate}
+	\item Zu beweisen:
+	\begin{itemize}
+		\item $(a_6 \und (b_4 \oder b_5)) \folgt (adrin \und letzter = b)$
+		\item $((a_4 \oder a_5) \und b_6) \folgt (bdrin \und letzter = a)$
+	\end{itemize}
+	\item Zu zeigen:
+	\begin{itemize}
+		\item $\immer \big [(a_4 \und \immer \neg a_6) \folgt \immer \irgendwann (bdrin \und letzter \neq b) \big ]$
+		\item $\immer \big [\irgendwann \immer (\neg bdrin) \oder \irgendwann (letzter = b) \big]$
+		\item $\immer \big [(a_4 \und \immer \neg a_6 \und \irgendwann (letzter = b)) \folgt \irgendwann \immer (letzter = b)) \big ]$
+	\end{itemize}
+\end{enumerate}
 
 \end{description}
 \end{document}
