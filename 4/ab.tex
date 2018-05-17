@@ -124,8 +124,9 @@ und $w_i = \begin{cases}
 Falls mehrere Threads im Spiel sind, ist der nächste Schritt unter Annahme schwacher Fairness nicht genau definiert.
 
 \item
-$ \Box\, a = aUa \land \neg (aU\neg a)$\\
-$ \lozenge\, a = aUa \lor \neg aUa$\\
+$ \lozenge\, a \equiv true\, Ua$, da letzteres true ist, wenn $\exists j\geq i: a_j = true \land true $\\
+
+$ \Box\, a \equiv \neg (\lozenge\, (\neg a)) \equiv \neg (true\, U\neg a)$, die Herleitung folgt dementsprechend aus dem 1. Fall.\\
 
 \end{enumerate}
 
