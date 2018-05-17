@@ -191,9 +191,73 @@ Au"serdem legen wir folgende Invarianten fest:
 	\item Zu zeigen:
 	\begin{itemize}
 		\item $\immer \big [(a_4 \und \immer \neg a_6) \folgt \immer \irgendwann (bdrin \und letzter \neq b) \big ]$
+
+		Invariante 1): $letzter \neq b \equiv letzter = a$
+		\[ \immer \big [(a_4 \und \immer \neg a_6) \folgt \immer \irgendwann (bdrin \und letzter = a) \big ] \]
+		Es gilt immer, dass, wenn $a$ einerseits bei $a_4$, also vor bei der "Uberpr"ufung der Schleife ist,
+		andererseits \emph{niemals}(immer nicht) $a_6$ eintreten wird, daraus folgt, dass immer
+		irgendwann $bdrin = true$ und $letzter = a$ sein muss.
+
+		Beweis durch Widerspruch: Nehmen wir an, $a$ ist bei $a_4$ und es wird niemals $a_6$ eintreten,
+		irgendwann wird aber $bdrin = false$ oder $letzter \neq a$. Dann k"onnte im Folgenden
+		$a$ einen Schritt machen, die Schleifenbedingungen sind nicht erf"ullt und $a$ w"urde von
+		$a_4$ in $a_6$ "ubergehen. Dass niemals $a_6$ eintreten kann wurde aber vorausgesetzt:
+		\emph{Widerspruch!}
+
+		Formal:
+		\[ \neg\left(\immer\left[(a_4\und\immer\neg a_6)\folgt\immer\irgendwann(bdrin\und letzter=a)\right]\right) \]
+		\[ \irgendwann\left(\neg\left[(a_4\und\immer\neg a_6)\folgt\immer\irgendwann(bdrin\und letzter=a)\right]\right) \]
+		\[ \irgendwann\left[(a_4\und\immer\neg a_6)\und\neg\immer\irgendwann(bdrin\und letzter=a)\right] \]
+		\[ \irgendwann\left[(a_4\und\immer\neg a_6)\und\irgendwann\neg\irgendwann(bdrin\und letzter=a)\right] \]
+		\[ \irgendwann\left[(a_4\und\immer\neg a_6)\und\irgendwann\immer\neg(bdrin\und letzter=a)\right] \]
+		\[ \irgendwann\left[(a_4\und\immer\neg a_6)\und\irgendwann\immer(\neg bdrin\oder letzter\neq a)\right] \]
+
+		Ist nun $bdrin = false$ oder $letzter \neq a$, wird der rechte Teilausdruck zu
+		$true$ ausgewertet, der linke Teilausdruck jedoch \emph{irgendwann}(n"amlich wenn $a$ den
+		n"achsten Schritt macht) zu $false$, da $a$ dann bei $a_6$ ist, was jedoch \emph{niemals}
+		eintreten sollte.
+
 		\item $\immer \big [\irgendwann \immer (\neg bdrin) \oder \irgendwann (letzter = b) \big]$
+
+		Es gilt immer, dass entweder irgendwann immer $bdrin = false$ ist oder dass irgendwann
+		$letzter = b$ sein wird.
+
+		Damit $bdrin$ dauerhaft (\emph{immer}) $false$ bleiben w"urde, m"usste $b$ in
+		$b_1$ abst"urzen und zu $b_\bot$ "ubergehen, da $bdrin$ nur in $b_1$ und $b_2$
+		$false$ ist und wir eingangs gefordert haben, dass immer auf $b_2$ irgendwann
+		$b_3$ folgt, wodurch dem $bdrin$ wieder auf $true$ gesetzt werden w"urde. Nur
+		wenn $b$ von $a_1$ zu $a_\bot$ "ubergeht, in dem es daraufhin f"ur immer verweilen
+		w"urde (siehe ebenfalls aufgestellte Bedingungen), kann $bdrin$ f"ur immer
+		$false$ bleiben.
+
+		St"urzt $b$ jedoch nicht ab und geht folglich von $b_1$ zu $b_2$ "uber, wird
+		es immer auch irgendwann zu $b_3$ und weiter zu $b_4$ "ubergehen, wonach
+		$letzter = b$ gelten w"urde, womit $\irgendwann (letzter = b)$ gelten w"urde.
+
+		Also:
+		\[ \irgendwann\immer(\neg bdrin) \equiv b_\bot \]
+		Falls $b_\bot$, dann $\irgendwann\immer(\neg bdrin)$,
+		sonst $\irgendwann (letzter = b)$
+
 		\item $\immer \big [(a_4 \und \immer \neg a_6 \und \irgendwann (letzter = b)) \folgt \irgendwann \immer (letzter = b)) \big ]$
+
+		% Es gilt immer, dass aus $a_4 \und \immer \neg a_6 \und \irgendwann (letzter = b)$
+		% folgt, dass irgendwann $letzter$ f"ur immer $b$ bleibt.
 	\end{itemize}
+\begin{verbatim}
+
+
+======================================================
+  global adrin = false, bdrin = false, letzter = a
+a1: U                     | b1: U
+a2: adrin  <- true        | b2: bdrin  <- true
+a3: letzter <- a          | b3: letzter <- b
+a4: while bdrin &&        | b4: while adrin &&
+          letzter = a do  |           letzter = b do
+a5:     NOP               | b5:     NOP
+a6: K                     | b6: K
+a7: adrin <- false        | b7: bdrin <- false
+\end{verbatim}
 \end{enumerate}
 
 \end{description}
