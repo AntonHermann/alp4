@@ -1,0 +1,52 @@
+\documentclass[a4paper,twoside,12pt]{article}
+%\usepackage [reqno] {amsmath}
+\usepackage{amsfonts,amstext}
+\usepackage{amsmath}
+\usepackage{german}
+\usepackage{graphicx}
+\usepackage{fullpage}
+
+\newcommand{\ZETTELNUMMER}{5}
+
+\newcounter{AUFGNR}
+\setcounter{AUFGNR}{1}
+\newcommand{\AUFGABE}[2]{\vspace{0.3cm}\item[Aufgabe~\arabic{AUFGNR}]\stepcounter{AUFGNR} #1\hfill\emph{#2}}
+
+
+\newcommand{\floor}[1]{\left\lfloor{#1}\right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil{#1}\right\rceil}
+\newcommand{\half}[1]{\frac{#1}{2}}
+\newcommand{\N}{\mathbb{N}}
+
+
+\renewcommand{\labelenumi}{(\alph{enumi})}
+\renewcommand{\labelenumii}{(\roman{enumii})}
+
+
+\begin{document}
+\pagestyle{empty}
+\hrule\medskip
+\rule{0ex}{0ex}\\[-1ex]
+\ZETTELNUMMER. Aufgabenblatt zur Vorlesung
+
+\smallskip
+\noindent
+\large
+\textbf{Nichtsequentielle und Verteilte Programmierung}\hfill SoSe
+2018 \\[0.5ex]
+\normalsize
+Anton Oehler, Mark Niehues
+
+\newcommand{\immer}{\Box}
+\newcommand{\irgendwann}{\lozenge}
+\newcommand{\folgt}{\Rightarrow}
+\newcommand{\oder}{\vee}
+\newcommand{\und}{\wedge}
+
+\medskip\hrule
+
+\begin{description}
+% Aufgabe 1
+\AUFGABE{Lineare Temporale Logik I}{10 Punkte}
+\end{description}
+\end{document}
