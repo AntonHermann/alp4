@@ -1,0 +1,214 @@
+\documentclass[10pt,	
+	parskip=half-,
+	paper=a4,
+	english,
+	ngerman]{scrartcl}
+% //////////////////// Pakete ////////////////////
+\usepackage{amsmath, mathtools, amssymb, bm}
+\usepackage{fontspec, microtype, lmodern}
+\usepackage[cmyk,table]{xcolor}
+\usepackage{tikz, tikz-qtree, fp, pgfplots, pgfplotstable, graphicx, pgf-umlcd}
+%\usepackage{lscape}
+\usepackage[normalem]{ulem} % hingefuegt von YC fuer \dashuline
+\usepackage{listings, tabularx, url, xspace, float, ifthen, longtable, fullpage, multirow, cancel,  comment}
+\usepackage[ngerman]{babel}
+\usepackage[hidelinks]{hyperref}
+\usepackage[shortlabels]{enumitem}
+\usepackage{amsthm}
+
+% //////////////////// Bibliotheken ////////////////////
+
+%\usetikzlibrary{tikzmark, positioning, automata, arrows, shapes}
+%\usetikzlibrary{calc, angles, quotes, babel} 				% Nadja
+%\usetikzlibrary{decorations.pathmorphing}
+%\usetikzlibrary{decorations.pathreplacing}
+%\usetikzlibrary{decorations.shapes}
+%\usetikzlibrary{decorations.text}
+
+\usetikzlibrary{shadows} % hingefuegt von YC fuer ER-Modell
+
+
+% //////////////////// Code ////////////////////
+\lstloadlanguages{Python, Haskell, [LaTeX]TeX, Java, SQL, HTML}
+\lstset{
+	basicstyle=\footnotesize\ttfamily,						% \scriptsize the size of the fonts that are used for the code
+	backgroundcolor = \color{bgcolour},					% legt Farbe der Box fest
+	breakatwhitespace=false,								% sets if automatic breaks should only happen at whitespace
+	breaklines=true,									% sets automatic line breaking
+	captionpos=t,										% sets the caption-position to bottom, t for top
+	commentstyle=\color{codeblue}\ttfamily,					% comment style
+	frame=single,										% adds a frame around the code
+	keepspaces=true,									% keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+	keywordstyle=\bfseries\ttfamily\color{codepurple},		% keyword style
+	numbers=left,										% where to put the line-numbers; possible values are (none, left, right)
+	numberstyle=\tiny\color{codegreen},					% the style that is used for the line-numbers
+	numbersep=7pt,										% how far the line-numbers are from the code
+	stepnumber=1,										% nummeriert nur jede i-te Zeile
+	showspaces=false,									% show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+	showstringspaces=false,								% underline spaces within strings only
+	showtabs=false,									% show tabs within strings adding particular underscores
+	flexiblecolumns=false,
+	tabsize=3,										% Tabgröße
+	stringstyle=\color{orange}\ttfamily,					% string literal style
+	numberblanklines=false,								% leere Zeilen werden nicht mitnummeriert
+	xleftmargin=1.2em,									% Abstand zum linken Layoutrand
+	xrightmargin=0.4em,									% Abstand zum rechten Layoutrand
+	%aboveskip=2ex, 
+}
+\lstdefinestyle{py}{
+	language=Python,
+}
+\lstdefinestyle{hs}{
+	language=Haskell,
+}
+\lstdefinestyle{tex}{
+	language=[LaTeX]TeX,
+	escapeinside={\%*}{*)},								% if you want to add LaTeX within your code
+	texcsstyle=*\bfseries\color{blue},						% hervorhebung der tex-Schlüsselwörter
+	morekeywords={*,$,\{,\},\[,\],lstinputlisting,includegraphics,
+		rowcolor,columncolor,listoffigures,lstlistoflistings,
+		subsection,subsubsection,textcolor,tableofcontents,colorbox,
+		fcolorbox,definecolor,cellcolor,url,linktocpage,subtitle,
+		subject,maketitle,usetikzlibrary,node,path,addbibresource,
+		printbibliography},								% if you want to add more keywords to the set
+	numbers=none,
+	numbersep=0pt,
+	xleftmargin=0.4em,
+}
+\lstdefinestyle{java}{
+	language=Java,
+	extendedchars=true,									% lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+}
+\lstdefinelanguage[x64]{Assembler}							% add a "x64" dialect of Assembler
+[x86masm]{Assembler}									% based on the "x86masm" dialect with these extra keywords:
+	{morekeywords={CDQE,CQO,CMPSQ,CMPXCHG16B,JRCXZ,LODSQ,MOVSXD,%
+		POPFQ,PUSHFQ,SCASQ,STOSQ,IRETQ,RDTSCP,SWAPGS,%
+		rax,rdx,rcx,rbx,rsi,rdi,rsp,rbp,%
+		r8,r8d,r8w,r8b,r9,r9d,r9w,r9b}
+}													% for 8-bits encodings only, does not work with UTF-8
+\lstdefinestyle{c}{
+	language=c,
+	extendedchars=true,									% for 8-bits encodings only, does not work with UTF-8
+}
+\lstdefinestyle{sql}{
+	language=SQL,
+}
+\lstdefinestyle{html}{
+	language=HTML,
+}
+
+% //////////////////// Commands ////////////////////
+\newcommand\N{\mathbb{N}\xspace}
+\newcommand\Q{\mathbb{Q}\xspace}
+\newcommand\R{\mathbb{R}}
+\newcommand\Z{\mathbb{Z}\xspace}
+\newcommand\zz{\ensuremath{\raisebox{+0.25ex}{Z}				% zu zeigen
+	\kern-0.4em\raisebox{-0.25ex}{Z}%
+	\;\xspace}}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%					% Nadja
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}%				% Nadja
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}%			% Nadja
+\DeclarePairedDelimiter\ub{\mathcal{O}(}{)}%					% Nadja
+\DeclarePairedDelimiter\lb{\Omega(}{)}%						% Nadja
+\DeclarePairedDelimiter\eb{\Theta(}{)}%						% Nadja
+\DeclarePairedDelimiter{\dx}{[}{]'}%            				% Nadja
+
+\makeatletter											% Nadja
+\newcommand{\subalign}[1]{%
+	\vcenter{%
+		\Let@ \restore@math@cr \default@tag
+		\baselineskip\fontdimen10 \scriptfont\tw@
+		\advance\baselineskip\fontdimen12 \scriptfont\tw@
+		\lineskip\thr@@\fontdimen8 \scriptfont\thr@@
+		\lineskiplimit\lineskip
+		\ialign{\hfil$\m@th\scriptstyle##$&$\m@th\scriptstyle{}##$\crcr#1\crcr
+		}%
+	}
+}
+\makeatother
+
+\newcolumntype{R}{>{\raggedleft\arraybackslash}p{2cm}}			% Nadja
+
+\DeclareMathOperator{\ggT}{ggT}         					% Nadja
+
+% //////////////////// Theorems ////////////////////
+%\newtheorem{theorem}{Satz}
+%\newtheorem{corollary}[theorem]{Folgerung}
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{observation}[theorem]{Beobachtung}
+%\newtheorem{definition}[theorem]{Definition}
+%\newtheorem{Literatur}[theorem]{Literatur}
+
+%\makeatletter   % konfiguriert proof
+%\newenvironment{Proof}[1][\proofname]{\par
+%	\pushQED{\qed}%
+%	\normalfont \topsep6\p@\@plus6\p@\relax
+%	\trivlist
+%	\item[\hskip\labelsep
+%		\bfseries
+%	#1\@addpunct{.}]\ignorespaces
+%}{%
+%	\popQED\endtrivlist\@endpefalse
+%}
+%\makeatother
+
+% ////////////// Header //////////////
+\newcommand{\head}[0]{%
+	% Notenspiegel
+	\vspace*{-15ex}									% rückt Logo an den oberen Seitenrand
+	\makebox[\dimexpr\textwidth][l]{						% linksbündig
+		\begin{minipage}{0.5\linewidth}
+			\newcounter{tasks}
+			\setcounter{tasks}{\taskCount}
+			\stepcounter{tasks}							% exerciseCounter++
+			\newcounter{no}
+			\def\and{&}
+			\setcounter{no}{1}
+			\renewcommand{\arraystretch}{1.3}
+			\setlength{\tabcolsep}{1.3em}
+			\begin{tabular}{*{\value{tasks}}{|c}|}
+				\hline
+				\whiledo{\value{no} < \value{tasks}}{ 		% \exercises
+					\theno\and\stepcounter{no}%
+				} $\sum$ \\ \hline
+				\setcounter{no}{1}
+				\whiledo{\value{no} < \value{tasks}}{ 		% \exercises 
+					\and\stepcounter{no}%
+				} \\[0.5em] \hline
+			\end{tabular}
+		\end{minipage}
+	}
+	% Dokumentkopf
+	\begin{center}
+	{\large \professor}\par
+	{\LARGE \textbf{\course, \semester}}\par
+	{\large \ifthenelse{\equal{\gender}{f}}{Tutorin}{Tutor}: \tutor, Tutorium \tutorial}\par
+	{\Large Übung \exercise}\par 
+	{\large \students}\par
+	%\date{\AdvanceDate[-1]\today}
+	%{\AdvanceDate[-1]\today}
+	%\today
+	\end{center}
+	\vspace{-2ex}
+	\rule{\linewidth}{.4pt}
+	\vspace{-4ex}
+}
+
+% //////////////////// Colors ////////////////////
+\let\definecolor=\xdefinecolor
+\definecolor{orange}{rgb}{0.8,0.3,0.3} 						% Für Code-Farben notwendig
+\definecolor{bgcolour}{rgb}{0.97,0.97,0.97}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+%\definecolor{codegray}{rgb}{0.35,0.35,0.35}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{codeblue}{rgb}{0.4,0.5,1}
+
+% //////////////////// Settings ////////////////////
+%\textheight = 230mm									% Höhe des Satzspiegels / Layouts
+%\footskip = 10ex										% Abstand zw. Fußzeile und Grundlinie letzter Textzeile
+\parindent 0pt											% verhindert Einrückung der 1. Zeile eines Absatzes
+%\setkomafont{sectioning}{\rmfamily\bfseries}				% setzt Ü-Schriften in Serifen, {disposition}
+
+\pgfplotsset{compat=1.14} 								% Funktionsgraphen
+\allowdisplaybreaks										% Nadja

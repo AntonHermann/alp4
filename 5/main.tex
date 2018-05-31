@@ -1,0 +1,72 @@
+% /////////////////////// SETUP /////////////////////////
+
+
+\input{src/header}
+
+\newcommand{\professor}{Wolfgang Mulzer}
+\newcommand{\tutor}{Johannes Nixdorf}
+\newcommand{\gender}{m}
+\newcommand{\tutorial}{4 (Do, 8-10 Uhr)}
+\newcommand{\exercise}{06}
+\newcommand{\course}{Nichtsequentielle und verteilte Programmierung}
+\newcommand{\semester}{SoSe 18}
+\newcommand{\students}{Mark Niehues, Anton Oehler}
+\newcommand{\taskCount}{3}
+
+% /////////////////////// BEGIN DOKUMENT /////////////////////////
+\begin{document}
+
+\head % erstellt die Titelseite
+
+% /////////////////////// Aufgabe 1 /////////////////////////
+\section*{1. Semaphore}
+\subsection*{a)}
+Das Programm ist schreibt abwechselnd \texttt{p} und \texttt{q}, beginnend mit \texttt{p}. Die beiden Prozesse sind so ineinander verschachtelt, dass nur abwechselnde Schreibvorgänge möglich sind. Falls nun \texttt{a1} oder \texttt{b1} entfernt wird, ist der entsprechende Prozess nicht mehr gezwungen auf die Ausführung des letzten Arbeitsschrittes des anderen Prozesses zu warten und wird in unregelmäßigen Abständen schreiben. Der jeweils andere Prozess ist ggf. gezwungen auf die Ausführung des Prozesses ohne 1. Arbeitsschritt zu warten, da dieser immernoch für das Erhöhen des Semaphores zuständig ist.
+
+\subsection*{b)}
+Ein \texttt{D.k = 2} wird erreicht, wenn genügend Prozesse in schritt \texttt{a6} warten, also die Semaphore S freigegeben ist, \texttt{k = -2} ist, jedoch \textit{D.P()} in \texttt{a7} nicht ausgeführt wird. Wenn zu diesem Zeitpunkt ein Prozess bevorzugt wird, wird dieser jedes mal, wenn er Abschnitt \texttt{a10} erreicht, den \texttt{count} vergrößern und bei \texttt{a3} verringern. Dieser ist jedoch immer $<= 0$, sodass die Semaphore \texttt{D} erhöht wird.
+\begin{table}[h]
+\centering
+\caption{Szenario bei dem \texttt{D.k = 2} erreicht wird.}
+\label{1b}
+\begin{tabular}{lllllll}
+p1 & p2 & p3 & p4 & S.k & D.k & k \\
+(a6, 1)   & (a6, 0)   & (a6, -1)   & (a6, -2)   & 1 & 0 & -2 \\
+(\textbf{a8}, 1)   & (a6, 0)   & (a6, -1)   & (a6, -2)   & 1 & 0 & -2 \\
+(\textbf{a9}, 1)   & (a6, 0)   & (a6, -1)   & (a6, -2)   & 1 & 0 & -2 \\
+(\textbf{a10}, 1)   & (a6, 0)   & (a6, -1)   & (a6, -2)   & \textbf{0} & 0 & -2 \\
+(\textbf{a11}, 1)   & (a6, 0)   & (a6, -1)   & (a6, -2)   & 0  & 0 & \textbf{-1} \\
+(\textbf{a12}, 1)   & (a6, 0)   & (a6, -1)   & (a6, -2)   & 0 & 0 & -1 \\
+(\textbf{a13}, 1)   & (a6, 0)   & (a6, -1)   & (a6, -2)   & 0 & \textbf{1} & -1 \\
+(\textbf{a1}, 1)   & (a6, 0)   & (a6, -1)   & (a6, -2)   & 1 & 1 & -1 \\
+(\textbf{a2}, 1)   & (a6, 0)   & (a6, -1)   & (a6, -2)   & 1 & 1 & -1 \\
+(\textbf{a3}, 1)   & (a6, 0)   & (a6, -1)   & (a6, -2)   & \textbf{0} & 1 & -1 \\
+(\textbf{a4}, 1)   & (a6, 0)   & (a6, -1)   & (a6, -2)   & 0 & 1 & \textbf{-2} \\
+(\textbf{a5}, \textbf{-2})   & (a6, 0)   & (a6, -1)   & (a6, -2)   & 0 & 1 & -2 \\
+(\textbf{a6}, -2)   & (a6, 0)   & (a6, -1)   & (a6, -2)   & \textbf{1} & 1 & -2 \\
+(a6, -2)   & (\textbf{a8}, 0)   & (a6, -1)   & (a6, -2)   & 1 & 1 & -2 \\
+(a6, -2)   & (\textbf{a9}, 0)   & (a6, -1)   & (a6, -2)   & 1 & 1 & -2 \\
+(a6, -2)   & (\textbf{a10}, 0)   & (a6, -1)   & (a6, -2)   & \textbf{0} & 1 & -2 \\
+(a6, -2)   & (\textbf{a11}, 0)   & (a6, -1)   & (a6, -2)   & 0 & 1 & \textbf{-1} \\
+(a6, -2)   & (\textbf{a12}, 0)   & (a6, -1)   & (a6, -2)   & 0 & 1 & -1 \\
+(a6, -2)   & (\textbf{a13}, 0)   & (a6, -1)   & (a6, -2)   & 0 & \textbf{2} & -1 \\
+\end{tabular}
+\end{table}
+
+\section*{2. Erzeuger-Verbraucher mit einem Ringpuffer}
+\subsection*{a)}
+Durch die größe des Arrays \texttt{buffer} ist die Buffergröße definiert. Die Variablen \texttt{head} und \text{tail} iterieren in einer Schleife über dieses Array (daher Ringbuffer). Die Semaphoren stellen dabei sicher, dass sich die Zeiger nicht überholen können, sondern stattdessen aufeinander warten.
+
+Falls zum Beispiel der Erzeuger N Elemente beschrieben hat, so sind die Semaphoren im Zustand: \texttt{notEmpty.k = N, notFull.k = 0}. Nun würde im nächsten erzeugenden Schritt \texttt{buffer[0]} überschrieben werden. Der Befehl an Stelle \texttt{p2} stellt allerdings sicher, dass der Erzeugerprozess nun erst warten muss, bis der Verbraucherprozess das Element an Stelle 0 verbraucht hat und in \texttt{c4} die Semaphore \texttt{notFull} wieder erhöht.
+
+\subsection*{b)}
+siehe Vorlesung
+
+\subsection*{c)}
+
+
+\section*{3. Speisende Philosophen}
+\section*{4. Kritische Abschnitte mit Semaphoren}
+
+% /////////////////////// END DOKUMENT /////////////////////////
+\end{document}
